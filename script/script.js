@@ -33,25 +33,24 @@ function render() {
             headerInput.value = '';
         };
     }
-        const btnTodoComplete = li.querySelector('.todo-complete');
+    const btnTodoComplete = li.querySelector('.todo-complete');
         btnTodoComplete.addEventListener('click', function() {
             item.completed = !item.completed;
             localStorage.setItem('todo', JSON.stringify(todoData));
             render();
         });
 
-        const btnTodoRemove = li.querySelector('.todo-remove');
+    const btnTodoRemove = li.querySelector('.todo-remove');
         btnTodoRemove.addEventListener('click', function() {
-            todoList.removeChild(li);
-            todoCompleted.removeChild(li);
-            localStorage.removeItem('todo', JSON.stringify(todoData));
+            const parent = li.parentNode;
+            todoData.splice(todoData.indexOf(item), 1)
+            parent.removeChild(li);
+            localStorage.setItem('todo', JSON.stringify(todoData));
         })
-
-
     });
 };
 
-todoControl.addEventListener('submit', function(event) {
+    todoControl.addEventListener('submit', function(event) {
     event.preventDefault();
 
     const newTodo = {
@@ -61,7 +60,6 @@ todoControl.addEventListener('submit', function(event) {
     todoData.push(newTodo);
     localStorage.setItem('todo', JSON.stringify(todoData));
     render();
- 
 });
 
 render();
